@@ -29,8 +29,11 @@ const chordBmOptions = {
     }]
 };
 
-const chord = Illustrator.chord(elem, chordBmOptions);
+const chordSVG = Illustrator.chord(elem, chordBmOptions);
 
-fs.writeFile('chord.html', chord.toString(), () => {
+
+console.log(chordSVG.toString());
+
+fs.writeFile('chord.html', chordSVG.toString(), () => {
     console.log('chord arrived')
 });

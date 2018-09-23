@@ -1,107 +1,48 @@
-Guitar JS is a JavaScript library, which draw an SVG image of guitar 
-chord
+>
+###  Chord Illustrator / Generator JS
+> based on: [guitar-js]('https://www.npmjs.com/package/guitar-js')
 
-# Install
+This is a JavaScript library which illustrates finger positions of a guitar chord on a fretboard.
 
+### install
 ```
-    npm install guitar-js
+npm install chord-illustrator-js
 ```
 
-# Usage
-
-To add a chord
-
-### Chord
-
+### code snippet for nodeJS
+>*B minor*
 ```javascript
-    Guitar.chord('container', {
-        // Options - see chapter Chord options
-    });
-```
+const Illustrator = require.main.require('./illustrator/illustrator');
+const DOMParser = require('xmldom').DOMParser;
 
-### Chord in tooltip
+const gcillustrator = new Illustrator();
 
-```javascript
-    Guitar.tooltipChord('container', {
-        // Options - see chapter Chord options
-    });
-```
+const document = new DOMParser().parseFromString('<html></html>');
 
-# Chord options
+const elem = document.createElement('div');
+const fs = require('fs');
 
-Options is an object containing all the chord data.
+const chordBmOptions = {
+    'title': 'Bm',
+    'statusString': ['open', 'open', 'open', 'open', 'open', 'closed'],
+    'chord': [{
+        'fret': 1,
+        'barre': {
+            'from': 1,
+            'to': 6
+        }
+    }, {
+        'fret': 2,
+        'string': 2
+    }, {
+        'fret': 3,
+        'string': 3
+    }, {
+        'fret': 3,
+        'string': 4
+    }]
+};
 
-### Title
-
-```javascript
-    {
-        'title': 'Bm'
-    }    
-```
-
-### String status
-
-String can be 'open' or 'closed'. When argument is null, status not 
-displayed. The array must contain 6 values, equal 
-to the number of strings.
-
-```javascript
-    {
-        'statusString': ['closed', 'open', null, null, null, 'open']
-    }    
-```
-
-### Chord
-
-An array which contain data on clamped strings. 
-
-* Clamp
-
-```javascript
-    {
-        'chord': [{
-            'fret': 2,
-            'string': 3
-        }]
-    }    
-```
-
-* Barre
-
-```javascript
-    {
-        'chord': [{
-            'fret': 2,
-            'barre': {
-                'from': 1,
-                'to': 6
-            }
-        }]
-    }    
-```
-
-### Example
-
-"Bm" chord code
-
-```javascript
-    Guitar.chord('container', {
-        'statusString': ['open', 'open', 'open', 'open', 'open', 'closed'],
-        'chord': [{
-            'fret': 1,
-            'barre': {
-                'from': 1,
-                'to': 5
-            }
-        }, {
-            'fret': 2,
-            'clamp': 2
-        }, {
-            'fret': 3,
-            'clamp': 3
-        }, {
-            'fret': 3,
-            'clamp': 4
-        }]
-    }); 
+const chordSVG = Illustrator.chord(elem, chordBmOptions);
+console.log(chordSVG.toString());
 ```
